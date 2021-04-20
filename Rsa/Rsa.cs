@@ -62,6 +62,27 @@ namespace Rsa
         }
 
             return e;
-}
+        }
+
+        private static List<string> EncodeWithEn(string text, long e, long n)
+        {
+            List<string> result = new List<string>();
+
+            int alphabetIdx;
+            BigInteger resBi;
+            BigInteger eBi = new BigInteger(e);
+            BigInteger nBi = new BigInteger(n);
+            for (int idx = 0; idx < text.Length; idx++)
+            {
+                alphabetIdx = Array.IndexOf(ALPHABET, char.ToUpper(text[idx]));
+
+                resBi = BigInteger.ModPow(
+                    new BigInteger(alphabetIdx), eBi, nBi);
+
+                result.Add(resBi.ToString());
+            }
+
+            return result;
+        }
     }
 }
