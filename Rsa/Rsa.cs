@@ -2,7 +2,7 @@ namespace Rsa
 {
     public class Rsa
     {
-        public static readonly char[] CHARS = new char[] {
+        public static readonly char[] ALPHABET = new char[] {
             '#', 'А', 'Б', 'В', 'Г',
             'Д', 'Е', 'Ё', 'Ж', 'З',
             'И', 'Й', 'К', 'Л', 'М',
