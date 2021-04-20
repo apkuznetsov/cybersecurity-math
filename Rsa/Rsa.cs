@@ -22,4 +22,22 @@ namespace Rsa
             return true;
     }
 
+        private static long D(long euler)
+        {
+            long d = euler - 1;
+
+            bool areCoprime;
+            for (long i = 2; i <= d; i++)
+            {
+                areCoprime = (euler % i == 0) && (d % i == 0);
+                if (areCoprime)
+                {
+                    d--;
+                    i = 1;
+                }
+            }
+
+            return d;
+        }
+
 }
