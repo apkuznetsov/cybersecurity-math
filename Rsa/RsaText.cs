@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace Rsa
@@ -13,13 +12,10 @@ namespace Rsa
         {
             string text = File.ReadAllText(INPUT_PATH, Encoding.UTF8);
 
-            List<string> encryptedList = Rsa.Encrypt(text, p, q);
+            string textEncrypted = Rsa.Encrypt(text, p, q);
 
-            using (StreamWriter writer = new StreamWriter(ENCRYPTED_PATH))
-            {
-                foreach (string line in encryptedList)
-                    writer.WriteLine(line);
-            }
+            using StreamWriter writer = new StreamWriter(ENCRYPTED_PATH);
+            writer.Write(textEncrypted);
         }
     }
 }

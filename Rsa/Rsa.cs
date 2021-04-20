@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Text;
 
 namespace Rsa
 {
@@ -19,7 +20,7 @@ namespace Rsa
             ' ', '#',
         };
 
-        public static List<string> Encrypt(string text, long p, long q)
+        public static string Encrypt(string text, long p, long q)
         {
             bool arePositive = (p > 0) && (q > 0);
             if (!arePositive)
@@ -83,9 +84,9 @@ namespace Rsa
             return e;
         }
 
-        private static List<string> EncryptWithEn(string text, long e, long n)
+        private static string EncryptWithEn(string text, long e, long n)
         {
-            List<string> result = new List<string>();
+            StringBuilder textEncrypted = new StringBuilder();
 
             int alphabetIdx;
             BigInteger resBi;
@@ -98,8 +99,11 @@ namespace Rsa
                 resBi = BigInteger.ModPow(
                     new BigInteger(alphabetIdx), eBi, nBi);
 
-                result.Add(resBi.ToString());
+                textEncrypted.Append(resBi.ToString()).Append(Environment.NewLine);
             }
+
+            return textEncrypted.ToString();
+        }
 
             return result;
         }
