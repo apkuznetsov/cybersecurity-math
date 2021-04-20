@@ -9,11 +9,11 @@ namespace Rsa
         public static readonly string INPUT_PATH = "in.txt";
         public static readonly string ENCRYPTED_PATH = "out-encrypted.txt";
 
-        public static void Encode(long p, long q)
+        public static void Encrypt(long p, long q)
         {
             string text = File.ReadAllText(INPUT_PATH, Encoding.UTF8);
 
-            List<string> encryptedList = Rsa.Encode(text, p, q);
+            List<string> encryptedList = Rsa.Encrypt(text, p, q);
 
             using (StreamWriter writer = new StreamWriter(ENCRYPTED_PATH))
             {

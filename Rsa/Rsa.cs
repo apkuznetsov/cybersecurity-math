@@ -19,7 +19,7 @@ namespace Rsa
             ' ', '#',
         };
 
-        public static List<string> Encode(string text, long p, long q)
+        public static List<string> Encrypt(string text, long p, long q)
         {
             bool arePositive = (p > 0) && (q > 0);
             if (!arePositive)
@@ -34,7 +34,7 @@ namespace Rsa
             long d = D(euler);
             long e = E(d, euler);
 
-            return EncodeWithEn(text, e, n);
+            return EncryptWithEn(text, e, n);
         }
 
         private static bool IsPrime(long num)
@@ -83,7 +83,7 @@ namespace Rsa
             return e;
         }
 
-        private static List<string> EncodeWithEn(string text, long e, long n)
+        private static List<string> EncryptWithEn(string text, long e, long n)
         {
             List<string> result = new List<string>();
 
