@@ -1,4 +1,6 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Numerics;
 
 namespace Rsa
 {
@@ -17,7 +19,24 @@ namespace Rsa
             ' ', '#',
         };
 
-        public static bool IsPrime(long num)
+        public static List<string> Encode(string text, long p, long q)
+        {
+            bool arePositive = (p > 0) && (q > 0);
+            if (!arePositive)
+                throw new NotPositiveException();
+
+            bool arePrime = IsPrime(p) && IsPrime(q);
+            if (!arePrime)
+                throw new NotPrimeException();
+
+            long n = p * q;
+            long euler = (p - 1) * (q - 1);
+            long d = D(euler);
+            long e = E(d, euler);
+
+            return EncodeWithEn(text, e, n);
+        }
+
         private static bool IsPrime(long num)
         {
             for (long i = 2; i <= Math.Sqrt(num); i++)
@@ -27,7 +46,7 @@ namespace Rsa
             }
 
             return true;
-    }
+        }
 
         private static long D(long euler)
         {
@@ -59,7 +78,7 @@ namespace Rsa
                     break;
                 else
                     e++;
-        }
+            }
 
             return e;
         }
