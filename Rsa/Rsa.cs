@@ -40,4 +40,20 @@ namespace Rsa
             return d;
         }
 
+        private static long E(long d, long euler)
+        {
+            long e = 10;
+
+            bool isRemainderOne;
+            while (true)
+            {
+                isRemainderOne = (e * d) % euler == 1;
+                if (isRemainderOne)
+                    break;
+                else
+                    e++;
+        }
+
+            return e;
 }
+    }
