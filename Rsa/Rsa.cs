@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
@@ -95,7 +95,6 @@ namespace Rsa
             for (int idx = 0; idx < text.Length; idx++)
             {
                 alphabetIdx = Array.IndexOf(ALPHABET, char.ToUpper(text[idx]));
-
                 resBi = BigInteger.ModPow(
                     new BigInteger(alphabetIdx), eBi, nBi);
 
@@ -105,7 +104,23 @@ namespace Rsa
             return textEncrypted.ToString();
         }
 
-            return result;
+        private static string DecryptWithDn(List<string> textEncrypted, long d, long n)
+        {
+            StringBuilder textDecrypted = new StringBuilder();
+
+            BigInteger currBi;
+            BigInteger dBi = new BigInteger(d);
+            BigInteger nBi = new BigInteger(n);
+            foreach (string currLine in textEncrypted)
+            {
+                currBi = BigInteger.ModPow(
+                    new BigInteger(Convert.ToDouble(currLine)), dBi, nBi);
+
+                int alphabetIdx = Convert.ToInt32(currBi.ToString());
+                textDecrypted.Append(ALPHABET[alphabetIdx].ToString());
+            }
+
+            return textDecrypted.ToString();
         }
     }
 }
