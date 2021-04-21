@@ -20,7 +20,7 @@ namespace Rsa
             ' ', '#',
         };
 
-        public static string Encrypt(string text, long p, long q)
+        public static string Encrypt(string text, long p, long q, out long d, out long n)
         {
             bool arePositive = (p > 0) && (q > 0);
             if (!arePositive)
@@ -30,9 +30,9 @@ namespace Rsa
             if (!arePrime)
                 throw new NotPrimeException();
 
-            long n = p * q;
+            n = p * q;
             long euler = (p - 1) * (q - 1);
-            long d = D(euler);
+            d = D(euler);
             long e = E(d, euler);
 
             return EncryptWithEn(text, e, n);
