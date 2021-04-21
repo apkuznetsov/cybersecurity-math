@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Rsa
@@ -28,9 +28,24 @@ namespace Rsa
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
-    }
+            }
         }
+
+        private void btnDecrypt_Click(object sender, EventArgs e)
+        {
+            try
             {
-                MessageBox.Show("НЕИЗВЕСТНАЯ ОШИБКА");
-}
+                long d = Convert.ToInt64(nudD.Text);
+                long n = Convert.ToInt64(nudN.Text);
+
+                RsaText.Decrypt(d, n);
+
+                MessageBox.Show("ТЕКСТ РАСШИФРОВАН");
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
+    }
+}
