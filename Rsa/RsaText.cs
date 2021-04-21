@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace Rsa
@@ -7,6 +9,7 @@ namespace Rsa
     {
         public static readonly string INPUT_PATH = "in.txt";
         public static readonly string ENCRYPTED_PATH = "out-encrypted.txt";
+        public static readonly string DECRYPTED_PATH = "out-decrypted.txt";
 
         public static void Encrypt(long p, long q, out long d, out long n)
         {
@@ -16,6 +19,18 @@ namespace Rsa
 
             using StreamWriter writer = new StreamWriter(ENCRYPTED_PATH);
             writer.Write(textEncrypted);
+            Process.Start(ENCRYPTED_PATH);
+        }
+
+        public static void Decrypt(long d, long n)
+        {
+            IEnumerable<string> codesEncrypted = File.ReadAllLines(ENCRYPTED_PATH, Encoding.UTF8);
+
+            string textDecrypted = Rsa.Decrypt(codesEncrypted, d, n);
+
+            using StreamWriter writer = new StreamWriter(DECRYPTED_PATH);
+            writer.Write(textDecrypted);
+            Process.Start(DECRYPTED_PATH);
         }
     }
 }
