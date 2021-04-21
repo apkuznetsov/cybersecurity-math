@@ -58,17 +58,26 @@ namespace Rsa
             return textEncrypted.ToString();
         }
 
-        private static string DecryptWithDn(List<string> textEncrypted, long d, long n)
+        public static string Decrypt(IEnumerable<string> codesEncrypted, long d, long n)
+        {
+            bool arePositive = (d > 0) && (n > 0);
+            if (!arePositive)
+                throw new NotPositiveException();
+
+            return DecryptWithDn(codesEncrypted, d, n);
+        }
+
+        private static string DecryptWithDn(IEnumerable<string> codesEncrypted, long d, long n)
         {
             StringBuilder textDecrypted = new StringBuilder();
 
             BigInteger currBi;
             BigInteger dBi = new BigInteger(d);
             BigInteger nBi = new BigInteger(n);
-            foreach (string currLine in textEncrypted)
+            foreach (string code in codesEncrypted)
             {
                 currBi = BigInteger.ModPow(
-                    new BigInteger(Convert.ToDouble(currLine)), dBi, nBi);
+                    new BigInteger(Convert.ToDouble(code)), dBi, nBi);
 
                 int alphabetIdx = Convert.ToInt32(currBi.ToString());
                 textDecrypted.Append(ALPHABET[alphabetIdx].ToString());
