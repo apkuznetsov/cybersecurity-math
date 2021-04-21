@@ -7,19 +7,6 @@ namespace Rsa
 {
     public static class Rsa
     {
-        public static readonly char[] ALPHABET = new char[] {
-            'А', 'Б', 'В', 'Г', 'Д',
-            'Е', 'Ё', 'Ж', 'З', 'И',
-            'Й', 'К', 'Л', 'М', 'Н',
-            'О', 'П', 'Р', 'С', 'Т',
-            'У', 'Ф', 'Х', 'Ц', 'Ч',
-            'Ш', 'Щ', 'Ь', 'Ы', 'Ъ',
-            'Э', 'Ю', 'Я',
-            '0', '1', '2', '3', '4',
-            '5', '6', '7', '8', '9',
-            ' ', ',', '#',
-        };
-
         public static string Encrypt(string text, long p, long q, out long d, out long n)
         {
             bool arePositive = (p > 0) && (q > 0);
@@ -42,15 +29,15 @@ namespace Rsa
         {
             StringBuilder textEncrypted = new StringBuilder();
 
-            int alphabetIdx;
+            int utfCodeChar;
             BigInteger resBi;
             BigInteger eBi = new BigInteger(e);
             BigInteger nBi = new BigInteger(n);
             for (int idx = 0; idx < text.Length; idx++)
             {
-                alphabetIdx = Array.IndexOf(ALPHABET, char.ToUpper(text[idx]));
+                utfCodeChar = text[idx];
                 resBi = BigInteger.ModPow(
-                    new BigInteger(alphabetIdx), eBi, nBi);
+                    new BigInteger(utfCodeChar), eBi, nBi);
 
                 textEncrypted.Append(resBi.ToString()).Append(Environment.NewLine);
             }
@@ -71,6 +58,7 @@ namespace Rsa
         {
             StringBuilder textDecrypted = new StringBuilder();
 
+            int utfCodeChar;
             BigInteger currBi;
             BigInteger dBi = new BigInteger(d);
             BigInteger nBi = new BigInteger(n);
@@ -79,8 +67,8 @@ namespace Rsa
                 currBi = BigInteger.ModPow(
                     new BigInteger(Convert.ToDouble(code)), dBi, nBi);
 
-                int alphabetIdx = Convert.ToInt32(currBi.ToString());
-                textDecrypted.Append(ALPHABET[alphabetIdx].ToString());
+                utfCodeChar = Convert.ToInt32(currBi.ToString());
+                textDecrypted.Append(Convert.ToChar(utfCodeChar));
             }
 
             return textDecrypted.ToString();
