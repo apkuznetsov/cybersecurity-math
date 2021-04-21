@@ -38,6 +38,45 @@ namespace Rsa
             return EncryptWithEn(text, e, n);
         }
 
+        private static string EncryptWithEn(string text, long e, long n)
+        {
+            StringBuilder textEncrypted = new StringBuilder();
+
+            int alphabetIdx;
+            BigInteger resBi;
+            BigInteger eBi = new BigInteger(e);
+            BigInteger nBi = new BigInteger(n);
+            for (int idx = 0; idx < text.Length; idx++)
+            {
+                alphabetIdx = Array.IndexOf(ALPHABET, char.ToUpper(text[idx]));
+                resBi = BigInteger.ModPow(
+                    new BigInteger(alphabetIdx), eBi, nBi);
+
+                textEncrypted.Append(resBi.ToString()).Append(Environment.NewLine);
+            }
+
+            return textEncrypted.ToString();
+        }
+
+        private static string DecryptWithDn(List<string> textEncrypted, long d, long n)
+        {
+            StringBuilder textDecrypted = new StringBuilder();
+
+            BigInteger currBi;
+            BigInteger dBi = new BigInteger(d);
+            BigInteger nBi = new BigInteger(n);
+            foreach (string currLine in textEncrypted)
+            {
+                currBi = BigInteger.ModPow(
+                    new BigInteger(Convert.ToDouble(currLine)), dBi, nBi);
+
+                int alphabetIdx = Convert.ToInt32(currBi.ToString());
+                textDecrypted.Append(ALPHABET[alphabetIdx].ToString());
+            }
+
+            return textDecrypted.ToString();
+        }
+
         private static bool IsPrime(long num)
         {
             for (long i = 2; i <= Math.Sqrt(num); i++)
@@ -82,45 +121,6 @@ namespace Rsa
             }
 
             return e;
-        }
-
-        private static string EncryptWithEn(string text, long e, long n)
-        {
-            StringBuilder textEncrypted = new StringBuilder();
-
-            int alphabetIdx;
-            BigInteger resBi;
-            BigInteger eBi = new BigInteger(e);
-            BigInteger nBi = new BigInteger(n);
-            for (int idx = 0; idx < text.Length; idx++)
-            {
-                alphabetIdx = Array.IndexOf(ALPHABET, char.ToUpper(text[idx]));
-                resBi = BigInteger.ModPow(
-                    new BigInteger(alphabetIdx), eBi, nBi);
-
-                textEncrypted.Append(resBi.ToString()).Append(Environment.NewLine);
-            }
-
-            return textEncrypted.ToString();
-        }
-
-        private static string DecryptWithDn(List<string> textEncrypted, long d, long n)
-        {
-            StringBuilder textDecrypted = new StringBuilder();
-
-            BigInteger currBi;
-            BigInteger dBi = new BigInteger(d);
-            BigInteger nBi = new BigInteger(n);
-            foreach (string currLine in textEncrypted)
-            {
-                currBi = BigInteger.ModPow(
-                    new BigInteger(Convert.ToDouble(currLine)), dBi, nBi);
-
-                int alphabetIdx = Convert.ToInt32(currBi.ToString());
-                textDecrypted.Append(ALPHABET[alphabetIdx].ToString());
-            }
-
-            return textDecrypted.ToString();
         }
     }
 }
