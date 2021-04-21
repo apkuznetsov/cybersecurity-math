@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -17,9 +16,10 @@ namespace Rsa
 
             string textEncrypted = Rsa.Encrypt(text, p, q, out d, out n);
 
-            using StreamWriter writer = new StreamWriter(ENCRYPTED_PATH);
-            writer.Write(textEncrypted);
-            Process.Start(ENCRYPTED_PATH);
+            using (StreamWriter writer = new StreamWriter(ENCRYPTED_PATH))
+            {
+                writer.Write(textEncrypted);
+            }
         }
 
         public static void Decrypt(long d, long n)
@@ -28,9 +28,10 @@ namespace Rsa
 
             string textDecrypted = Rsa.Decrypt(codesEncrypted, d, n);
 
-            using StreamWriter writer = new StreamWriter(DECRYPTED_PATH);
-            writer.Write(textDecrypted);
-            Process.Start(DECRYPTED_PATH);
+            using (StreamWriter writer = new StreamWriter(DECRYPTED_PATH))
+            {
+                writer.Write(textDecrypted);
+            }
         }
     }
 }

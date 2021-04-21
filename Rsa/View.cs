@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 
 namespace Rsa
@@ -24,8 +22,14 @@ namespace Rsa
                 RsaText.Encrypt(p, q, out d, out n);
                 nudD.Value = d;
                 nudN.Value = n;
+
+                MessageBox.Show("ТЕКСТ ЗАШИФРОВАН");
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
     }
-            catch
+        }
             {
                 MessageBox.Show("НЕИЗВЕСТНАЯ ОШИБКА");
 }
