@@ -25,7 +25,7 @@ namespace lab1
             return sb.ToString();
         }
 
-        public static string Encode(string text, string keyseq)
+        public static string Encrypt(string text, string keyseq)
         {
             StringBuilder sb = new StringBuilder(text.Length);
 
@@ -44,16 +44,16 @@ namespace lab1
             return sb.ToString();
         }
 
-        public static string Decode(string encodedText, string keyseq)
+        public static string Decrypt(string encryptedText, string keyseq)
         {
-            StringBuilder sb = new StringBuilder(encodedText.Length);
+            StringBuilder sb = new StringBuilder(encryptedText.Length);
 
             byte encodedTextByte;
             byte keyseqByte;
             char ch;
-            for (int i = 0; i < encodedText.Length; i++)
+            for (int i = 0; i < encryptedText.Length; i++)
             {
-                encodedTextByte = (byte)encodedText[i];
+                encodedTextByte = (byte)encryptedText[i];
                 keyseqByte = (byte)keyseq[i];
 
                 ch = (char)(byte)(encodedTextByte ^ keyseqByte);
