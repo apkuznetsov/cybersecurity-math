@@ -38,5 +38,24 @@ namespace lab1
 
             return sb.ToString();
         }
+
+        public static string Decode(string encodedText, string keyseq)
+        {
+            StringBuilder sb = new StringBuilder(encodedText.Length);
+
+            byte encodedTextByte;
+            byte keyseqByte;
+            char ch;
+            for (int i = 0; i < encodedText.Length; i++)
+            {
+                encodedTextByte = (byte)encodedText[i];
+                keyseqByte = (byte)keyseq[i];
+
+                ch = (char)(byte)(encodedTextByte ^ keyseqByte);
+                sb.Append(ch);
+            }
+
+            return sb.ToString();
+        }
     }
 }
