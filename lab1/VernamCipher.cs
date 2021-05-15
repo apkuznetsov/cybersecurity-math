@@ -1,10 +1,15 @@
-﻿using System;
+using System;
 using System.Text;
 
 namespace lab1
 {
     public static class VernamCipher
     {
+        private static readonly char[] ALPHABET = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ" + 
+            "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" + 
+            "abcdefghijklmnopqrstuvwxyz" + 
+            "абвгдеёжзийклмнопрстуфхцчшщъыьэюя").ToCharArray();
+
         public static string GenerateKeyseq(int textLen)
         {
             StringBuilder sb = new StringBuilder(textLen);
