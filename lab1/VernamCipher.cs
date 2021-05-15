@@ -5,21 +5,27 @@ namespace lab1
 {
     public static class VernamCipher
     {
-        private static readonly char[] ALPHABET = ("ABCDEFGHIJKLMNOPQRSTUVWXYZ" + 
-            "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" + 
-            "abcdefghijklmnopqrstuvwxyz" + 
-            "абвгдеёжзийклмнопрстуфхцчшщъыьэюя").ToCharArray();
+        private static readonly string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+            "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
+            "abcdefghijklmnopqrstuvwxyz" +
+            "абвгдеёжзийклмнопрстуфхцчшщъыьэюя ";
+
+        private static int Code(char symbol)
+        {
+            return ALPHABET.IndexOf(symbol);
+        }
 
         public static string GenerateKeyseq(int textLen)
         {
             StringBuilder sb = new StringBuilder(textLen);
 
             Random random = new Random();
-            char ch;
+            int len = ALPHABET.Length;
+            int idx;
             for (int i = 0; i < textLen; i++)
             {
-                ch = (char)random.Next(256);
-                sb.Append(ch);
+                idx = random.Next(len);
+                sb.Append(ALPHABET[idx]);
             }
 
             return sb.ToString();
@@ -29,35 +35,28 @@ namespace lab1
         {
             StringBuilder sb = new StringBuilder(text.Length);
 
-            byte textByte;
-            byte keyseqByte;
-            char ch;
+            int mod = ALPHABET.Length;
+            int idx;
             for (int i = 0; i < text.Length; i++)
             {
-                textByte = (byte)text[i];
-                keyseqByte = (byte)keyseq[i];
-
-                ch = (char)(byte)(textByte ^ keyseqByte);
-                sb.Append(ch);
+                idx = (Code(text[i]) + Code(keyseq[i])) % mod;
+                sb.Append(ALPHABET[idx]);
             }
 
             return sb.ToString();
         }
 
-        public static string Decrypt(string encryptedText, string keyseq)
+        public static string Decrypt(string text, string keyseq)
         {
-            StringBuilder sb = new StringBuilder(encryptedText.Length);
+            StringBuilder sb = new StringBuilder(text.Length);
 
-            byte encodedTextByte;
-            byte keyseqByte;
-            char ch;
-            for (int i = 0; i < encryptedText.Length; i++)
+            int mod = ALPHABET.Length;
+            int idx;
+            for (int i = 0; i < text.Length; i++)
             {
-                encodedTextByte = (byte)encryptedText[i];
-                keyseqByte = (byte)keyseq[i];
-
-                ch = (char)(byte)(encodedTextByte ^ keyseqByte);
-                sb.Append(ch);
+                idx = (Code(text[i]) - Code(keyseq[i])) % mod;
+                idx = idx < 0 ? mod + idx : idx % mod;
+                sb.Append(ALPHABET[idx]);
             }
 
             return sb.ToString();
