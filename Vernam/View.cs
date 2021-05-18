@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace lab1
+namespace Vernam
 {
     public partial class View : Form
     {

@@ -1,5 +1,5 @@
 ﻿
-namespace lab1
+namespace Vernam
 {
     partial class View
     {

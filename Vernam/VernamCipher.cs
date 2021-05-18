@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace lab1
+namespace Vernam
 {
     public static class VernamCipher
     {
